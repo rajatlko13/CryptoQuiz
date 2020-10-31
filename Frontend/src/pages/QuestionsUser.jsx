@@ -124,6 +124,7 @@ class QuestionsUser extends Component {
                 { this.state.stage == 0 && <h5>Registrations will begin shortly...</h5>}
                 { this.state.stage == 1 && !isRegistered  && <Button color='blue' className='mt-3 mx-2' onClick={this.regQuiz} loading={this.state.loading} disabled={this.state.disabled} >Register</Button> }
                 { this.state.stage == 1 && isRegistered  && <Label color="green" size="large" circular>Registered</Label> }
+                { this.state.stage > 1 && !isRegistered && <h5>Registrations Closed! You have not registered for this Quiz.</h5>}
                 { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={"/user/attemptQuiz/" + this.props.match.params.id} ><Button color='green' className='mt-3 mx-2'>Start Quiz</Button></Link> }
                 { this.state.stage == 2 && hasAttempted && <Label color="red" size="large" circular>Quiz Attempted</Label> }
                 { this.state.stage == 3 && isRegistered && <h5>Answers Key will be released shortly...</h5>}
