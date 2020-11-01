@@ -17,6 +17,7 @@ const deployEIP20 = async () => {
     // 0x5fbb011b3a0cd0117d1f6d8e582668c9192ea237
 
     // Rinkeby-
+    // 0x9aE5F1Ec987F16410AE7C4dCDe2d0EfDC5a7eAae
     // 0x492360a5B2e90bb8Bf70A2C3084c39315EDD1cb3
 }
 

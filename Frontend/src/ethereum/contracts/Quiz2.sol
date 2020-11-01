@@ -39,19 +39,11 @@ contract Quiz{
     
     EIP20 instanceEIP20;
     
-    struct User {
-        bool isRegistered;
-        bool quizCompleted;
-        bool prizeClaimed;
-        uint[] ans;
-    }
-    
-    mapping (string => User) public users;              // Stores all the registered users
-    
     enum Stage {Init, Reg, Play, Pub, End}
     Stage public stage;
-    
+    //uint startTime;
     uint[] public answers;
+    mapping( address => bool) public user;     // Stores all the registered users, assigning them true value
     
     address public manager;
     
@@ -113,50 +105,22 @@ contract Quiz{
             return 4;
     }
     
-    function registerUser(string memory email) public validStage(Stage.Reg) {
-        require(users[email].isRegistered == false);
-        users[email].isRegistered = true;
-        users[email].quizCompleted = false;
-        users[email].prizeClaimed = false;
+    function registerUser() public validStage(Stage.Reg) {
+        require(user[msg.sender] == false);
+        user[msg.sender] = true;
     }
     
-    function isUserRegistered(string memory email) public view validStage(Stage.Play) returns (bool) {
-        if(users[email].isRegistered == true)
+    function isUserRegistered() public view validStage(Stage.Play) returns (bool) {
+        if(user[msg.sender] == true)
             return true;
         else
             return false;
     }
     
-    function setUserAnswers(string memory email, uint[] memory userAnswers) public validStage(Stage.Play) {
-        require(users[email].isRegistered == true && users[email].quizCompleted == false);
-        users[email].ans = userAnswers;
-        users[email].quizCompleted = true;
-    }
-    
-    function isQuizAttempted(string memory email) public view validStage(Stage.Play) returns (bool) {
-        if(users[email].quizCompleted == true)
-            return true;
-        else
-            return false;
-    }
-    
-    function getUserAnswers(string memory email) public view returns (uint[] memory) {
-        return users[email].ans;
-    }
-    
-    function claimPrize(string memory email, uint correctAnswers) public validStage(Stage.End) returns (bool) {         // function for user to claim prize coins
-        require(users[email].quizCompleted == true && users[email].prizeClaimed == false);
+    function claimPrize(uint correctAnswers) public returns (bool) {         // function for user to claim prize coins
+        require(user[msg.sender]==true);
         uint coins = (correctAnswers*3)/2;
-        bool res = instanceEIP20.transfer(msg.sender, coins);
-        users[email].prizeClaimed = true;
-        return res;
-    }
-    
-    function isPrizeClaimed(string memory email) public view validStage(Stage.Play) returns (bool) {
-        if(users[email].prizeClaimed == true)
-            return true;
-        else
-            return false;
+        return instanceEIP20.transfer(msg.sender, coins);
     }
     
     function destroyContract(address payable transferAddress) public isManager validStage(Stage.End) {
