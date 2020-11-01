@@ -17,6 +17,7 @@ import UserCoins from './pages/UserCoins';
 import QuizPageUser from './pages/QuizPageUser';
 import QuestionsUser from './pages/QuestionsUser';
 import AttemptQuiz from './pages/AttemptQuiz';
+import ViewAnswersUser from './pages/ViewAnswersUser';
 import Logout from './pages/Logout';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './utilities/ProtectedRoute';
@@ -57,6 +58,7 @@ class App extends Component {
             <ProtectedRoute path="/quizPageUser" component={QuizPageUser} role="user" {...this.props} />
             <ProtectedRoute path="/user/quiz/:id" component={QuestionsUser} role="user" {...this.props} />
             <ProtectedRoute path="/user/attemptQuiz/:id" component={AttemptQuiz} role="user" {...this.props} />
+            <ProtectedRoute path="/user/viewAnswers/:id" component={ViewAnswersUser} role="user" {...this.props} />
             <Route path="/login" component={Login} />
             <Route path="/registration" component={Registration} />
             <Route path="/logout" component={Logout} />

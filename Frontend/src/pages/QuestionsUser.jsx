@@ -127,8 +127,8 @@ class QuestionsUser extends Component {
                 { this.state.stage > 1 && !isRegistered && <h5>Registrations Closed! You have not registered for this Quiz.</h5>}
                 { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={"/user/attemptQuiz/" + this.props.match.params.id} ><Button color='green' className='mt-3 mx-2'>Start Quiz</Button></Link> }
                 { this.state.stage == 2 && hasAttempted && <Label color="red" size="large" circular>Quiz Attempted</Label> }
-                { this.state.stage == 3 && isRegistered && <h5>Answers Key will be released shortly...</h5>}
-                { this.state.stage == 4 && isRegistered  && <Link to={{ pathname: `/admin/publishAnswers/${this.props.match.params.id}` , 
+                { this.state.stage == 3 && isRegistered && <Label color="olive" size="large" circular>Answers Key will be released shortly...</Label>}
+                { this.state.stage == 4 && isRegistered  && <Link to={{ pathname: `/user/viewAnswers/${this.props.match.params.id}` , 
                                                         state: {
                                                             quizContractAddress: this.state.quizContractAddress
                                                         } }}>
