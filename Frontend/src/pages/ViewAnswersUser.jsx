@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Table } from 'semantic-ui-react';
+import { Button, Label, Table } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
@@ -11,8 +11,12 @@ import jwtDecode from 'jwt-decode';
 class ViewAnswersUser extends Component {
     state = { 
         quiz: [],
-        correctAnswers: '',
-        userAnswers: ''
+        correctAnswers: [],
+        userAnswers: [],
+        isPrizeClaimed: '',
+        marks: '',
+        loading: false,
+        disabled: false
      }
 
     async componentDidMount() {
@@ -25,9 +29,15 @@ class ViewAnswersUser extends Component {
             const instance = await instanceQuiz(this.props.history.location.state.quizContractAddress);
             const correctAnswers = await instance.methods.getAnswerKey().call();
             const userAnswers = await instance.methods.getUserAnswers(email).call();
-            
-            this.setState({ correctAnswers, userAnswers });
-            
+
+            const isPrizeClaimed = await instance.methods.isPrizeClaimed(email).call();
+
+            let marks = 0;
+            for (let index = 0; index < correctAnswers.length; index++) {
+                if(correctAnswers[index] == userAnswers[index])
+                marks++;
+            }
+            this.setState({ correctAnswers, userAnswers, isPrizeClaimed, marks });
         } catch (error) {
             console.log("error--",error);
             toast.error("Unexpected Error");
@@ -47,7 +57,7 @@ class ViewAnswersUser extends Component {
                         <Table.HeaderCell>{correctAnswers[index]}</Table.HeaderCell>
                         <Table.HeaderCell>{userAnswers[index]}</Table.HeaderCell>
                         <Table.HeaderCell>
-                            { correctAnswers[index]==userAnswers[index]? "Correct" : "Wrong" }
+                            { correctAnswers[index]==userAnswers[index]? <Label color="green" circular>Correct</Label> : <Label color="red" circular>Wrong</Label> }
                         </Table.HeaderCell>
                     </Table.Row>
                 )
@@ -55,10 +65,32 @@ class ViewAnswersUser extends Component {
         return res;
     }
 
+    claimPrize = async () => {
+        this.setState({ loading: true, disabled: true });
+        try {
+            const { email } = jwtDecode(localStorage.getItem('token'));
+            const accounts = await web3.eth.getAccounts();
+            const instance = await instanceQuiz(this.props.history.location.state.quizContractAddress);
+            await instance.methods.claimPrize(email, parseInt(this.state.marks)).send({ from: accounts[1] });
+            toast.success('QuizCoins Received');
+            this.setState({ isPrizeClaimed: true });
+        } catch (error) {
+            console.log("error--",error);
+            toast.error("Unexpected Error");
+        }
+        this.setState({ loading: false, disabled: false });
+    }
+
     render() { 
         return ( 
             <div className="container">
+                <ToastContainer/>
                 <h3>View Answers</h3>
+                <h4>Marks : {this.state.marks}/{this.state.correctAnswers.length}</h4>
+                <h4>Prize Won : {parseInt(this.state.marks*3/2)} QC</h4>
+                { !this.state.isPrizeClaimed && 
+                    <Button className="my-2" style={{float: "right"}} onClick={this.claimPrize} color="blue" loading={this.state.loading} disabled={this.state.disabled} >Claim Prize</Button> }
+                { this.state.isPrizeClaimed && <Label color="pink" style={{float: 'right', marginBottom: 10}} size="large" circular>Prize Claimed</Label> }
                 <Table celled color='black' striped selectable inverted textAlign="center" verticalAlign="middle" unstackable>
                     <Table.Header>
                         <Table.Row>
