@@ -19,6 +19,7 @@ const deployQuizFactory = async () => {
     // 0xd7C5a8001A82E67FDE00Ba47D78df0c7b0D6aC04
 
     // Rinkeby-
+    // 0x9D96aE41Fcc91DD8465611e41D83ce70f8933ebb
     // 0x2B0Dd5486F9E0A6071f2E199ca1A2bb87d7039c4
     // 0x5Fbb011B3A0CD0117D1F6d8e582668c9192eA237
 }

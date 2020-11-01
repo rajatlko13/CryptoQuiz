@@ -120,7 +120,7 @@ contract Quiz{
         users[email].prizeClaimed = false;
     }
     
-    function isUserRegistered(string memory email) public view validStage(Stage.Play) returns (bool) {
+    function isUserRegistered(string memory email) public view returns (bool) {
         if(users[email].isRegistered == true)
             return true;
         else
@@ -133,7 +133,7 @@ contract Quiz{
         users[email].quizCompleted = true;
     }
     
-    function isQuizAttempted(string memory email) public view validStage(Stage.Play) returns (bool) {
+    function isQuizAttempted(string memory email) public view returns (bool) {
         if(users[email].quizCompleted == true)
             return true;
         else
@@ -152,7 +152,7 @@ contract Quiz{
         return res;
     }
     
-    function isPrizeClaimed(string memory email) public view validStage(Stage.Play) returns (bool) {
+    function isPrizeClaimed(string memory email) public view returns (bool) {
         if(users[email].prizeClaimed == true)
             return true;
         else

@@ -32,19 +32,15 @@ class QuestionsUser extends Component {
             this.setState({ quiz: quizFactory.data, stage, quizContractAddress });
 
             const { email } = jwtDecode(localStorage.getItem("token"));
-            const isReg = await axios.get('http://localhost:9000/api/answers/isRegistered/' + this.props.match.params.id + '/' + email);
-            console.log("isReg=",isReg);
-            if(isReg.data)
-                this.setState({ isRegistered: true });
-            else
-                this.setState({ isRegistered: false });
+            // const isReg = await axios.get('http://localhost:9000/api/answers/isRegistered/' + this.props.match.params.id + '/' + email);
+            // console.log("isReg=",isReg);
+            const isReg = await instance.methods.isUserRegistered(email).call();
+            this.setState({ isRegistered: isReg });
 
-            const attempted = await axios.get('http://localhost:9000/api/answers/hasAttempted/' + this.props.match.params.id + '/' + email);
-            console.log("hasAttempted=",attempted.data);
-            if(attempted.data)
-                this.setState({ hasAttempted: true });
-            else
-                this.setState({ hasAttempted: false });
+            // const attempted = await axios.get('http://localhost:9000/api/answers/hasAttempted/' + this.props.match.params.id + '/' + email);
+            // console.log("hasAttempted=",attempted.data);
+            const attempted = await instance.methods.isQuizAttempted(email).call();
+            this.setState({ hasAttempted: attempted });
         } catch (error) {
             console.log("error-",error);
         }
@@ -54,11 +50,14 @@ class QuestionsUser extends Component {
         this.setState({ loading: true, disabled: true });
         try {
             const { email } = jwtDecode(localStorage.getItem("token"));
-            const user = {
-                'email': email,
-                'quizCompleted': false
-            };
-            const res = await axios.post('http://localhost:9000/api/answers/registerUser/' + this.props.match.params.id, { user });
+            // const user = {
+            //     'email': email,
+            //     'quizCompleted': false
+            // };
+            // const res = await axios.post('http://localhost:9000/api/answers/registerUser/' + this.props.match.params.id, { user });
+            const accounts = await web3.eth.getAccounts();
+            const instance = await instanceQuiz(this.state.quizContractAddress);
+            await instance.methods.registerUser(email).send({ from: accounts[1] });
             toast.success("Registration Successful!");
             this.setState({ isRegistered: true });
         } catch (error) {
@@ -125,15 +124,20 @@ class QuestionsUser extends Component {
                 { this.state.stage == 1 && !isRegistered  && <Button color='blue' className='mt-3 mx-2' onClick={this.regQuiz} loading={this.state.loading} disabled={this.state.disabled} >Register</Button> }
                 { this.state.stage == 1 && isRegistered  && <Label color="green" size="large" circular>Registered</Label> }
                 { this.state.stage > 1 && !isRegistered && <h5>Registrations Closed! You have not registered for this Quiz.</h5>}
-                { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={"/user/attemptQuiz/" + this.props.match.params.id} ><Button color='green' className='mt-3 mx-2'>Start Quiz</Button></Link> }
+                { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={{ pathname: "/user/attemptQuiz/" + this.props.match.params.id, 
+                                                                                        state: {
+                                                                                            quizContractAddress: this.state.quizContractAddress
+                                                                                        }   }} >
+                                                                                <Button color='green' className='mt-3 mx-2'>Start Quiz</Button>
+                                                                            </Link> }
                 { this.state.stage == 2 && hasAttempted && <Label color="red" size="large" circular>Quiz Attempted</Label> }
                 { this.state.stage == 3 && isRegistered && <Label color="olive" size="large" circular>Answers Key will be released shortly...</Label>}
                 { this.state.stage == 4 && isRegistered  && <Link to={{ pathname: `/user/viewAnswers/${this.props.match.params.id}` , 
-                                                        state: {
-                                                            quizContractAddress: this.state.quizContractAddress
-                                                        } }}>
-                                                <Button color='blue' className='mt-3 mx-2'>View Answers</Button>
-                                            </Link> }
+                                                                        state: {
+                                                                            quizContractAddress: this.state.quizContractAddress
+                                                                        } }}>
+                                                                <Button color='blue' className='mt-3 mx-2'>View Answers</Button>
+                                                            </Link> }
             </div>
          );
     }

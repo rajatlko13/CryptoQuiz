@@ -5,6 +5,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import web3 from '../ethereum/web3';
 import jwtDecode from 'jwt-decode';
+import instanceQuiz from '../ethereum/instanceQuiz';
 
 class AttemptQuiz extends Component {
    
@@ -58,11 +59,7 @@ class AttemptQuiz extends Component {
                 for (const key in answers) {
                     if (answers.hasOwnProperty(key)) {
                         if((question._id).localeCompare(key) == 0) {
-                            let ans = {
-                                'question': question._id,
-                                'option': answers[key]
-                            }
-                            ansKey.push(ans);
+                            ansKey.push(parseInt(answers[key]));
                             break;
                         }
                     }
@@ -70,22 +67,22 @@ class AttemptQuiz extends Component {
             });
 
             console.log(ansKey);
-            // const accounts = await web3.eth.getAccounts();
-            // const instance = await instanceQuiz(this.props.history.location.state.quizContractAddress);
-            // await instance.methods.publishAnswers(ansKey).send({ from: accounts[0] });
             const { email } = jwtDecode(localStorage.getItem("token"));
-            const obj = {
-                'user': {
-                    'email': email,
-                    'isCompleted': true,
-                    'answers': ansKey
-                }
-            }
-            const res = await axios.post('http://localhost:9000/api/answers/addUserAnswers/' + this.props.match.params.id, obj);
-            console.log("answersAddedRes=",res.data);
+            // const obj = {
+            //     'user': {
+            //         'email': email,
+            //         'isCompleted': true,
+            //         'answers': ansKey
+            //     }
+            // }
+            // const res = await axios.post('http://localhost:9000/api/answers/addUserAnswers/' + this.props.match.params.id, obj);
+            // console.log("answersAddedRes=",res.data);
+            const accounts = await web3.eth.getAccounts();
+            const instance = await instanceQuiz(this.props.history.location.state.quizContractAddress);
+            await instance.methods.setUserAnswers(email, ansKey).send({ from: accounts[1] });
 
             this.setState({ loading: false, disabled: false });
-            this.props.history.replace('/admin/quiz/' + this.props.match.params.id);
+            this.props.history.replace('/user/quiz/' + this.props.match.params.id);
         } catch (error) {
             console.log("error--",error);
             toast.error('Unexpected Error');
@@ -125,7 +122,7 @@ class AttemptQuiz extends Component {
         return ( 
             <div className="container">
                 <ToastContainer />
-                <h2>Publish Answers</h2>
+                <h2>Attempt Quiz</h2>
                 <form onSubmit={this.handleSubmit}>
                     {this.renderForm()}
                     <Button type="submit" color="green" size="tiny" loading={this.state.loading} disabled={this.state.disabled} >Finish Attempt</Button>
