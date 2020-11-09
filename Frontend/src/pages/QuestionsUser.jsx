@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import web3 from '../ethereum/web3';
 import instanceQuiz from '../ethereum/instanceQuiz';
+import instanceEIP20 from '../ethereum/instanceEIP20';
+import { addressQuizFactory } from '../ethereum/addressConfig.json';
 import jwtDecode from 'jwt-decode';
 
 class QuestionsUser extends Component {
@@ -56,6 +58,8 @@ class QuestionsUser extends Component {
             // };
             // const res = await axios.post('http://localhost:9000/api/answers/registerUser/' + this.props.match.params.id, { user });
             const accounts = await web3.eth.getAccounts();
+            const instanceEIP = await instanceEIP20;
+            await instanceEIP.methods.transfer(addressQuizFactory, 5).send({ from: accounts[1] });
             const instance = await instanceQuiz(this.state.quizContractAddress);
             await instance.methods.registerUser(email).send({ from: accounts[1] });
             toast.success("Registration Successful!");
@@ -95,21 +99,6 @@ class QuestionsUser extends Component {
     //     }
     //     this.setState({ loading: false, disabled: false });
     // }
-
-    endQuiz = async () => {
-        this.setState({ loading: true, disabled: true });
-        try {
-            const accounts = await web3.eth.getAccounts();
-            const instance = await instanceQuiz(this.state.quizContractAddress);
-            await instance.methods.endQuiz().send({ from: accounts[0] });
-            toast.success("Quiz Finished! It's the time to publish the answer key!");
-            this.setState({ stage: 3 });
-        } catch (error) {
-            console.log("error--",error);
-            toast.error("Request Failed");
-        }
-        this.setState({ loading: false, disabled: false });
-    }
 
     render() { 
 

@@ -13,6 +13,9 @@ const quizFactorySchema = new mongoose.Schema({
     questionSet: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Quiz'
+    },
+    quizStartedTime: {
+        type: Date
     }
 }, {timestamps: true});
 

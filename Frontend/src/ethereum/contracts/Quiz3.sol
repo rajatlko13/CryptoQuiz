@@ -10,7 +10,7 @@ abstract contract EIP20 {
 }
 
 contract QuizFactory {
-                
+    
     EIP20 instanceEIP20;
     mapping ( string => address ) public deployedQuizzes;
     
@@ -32,11 +32,6 @@ contract QuizFactory {
     function purchaseCoins(uint coins) public payable returns (bool){        // function for user to buy coins
         require(msg.value == coins*0.01 ether);
         return instanceEIP20.transfer(msg.sender, coins);
-    }
-    
-    function convertCoinsToEther(uint coins) public {
-        require(instanceEIP20.balanceOf(msg.sender) >= coins);
-        (msg.sender).transfer(coins*0.01 ether);
     }
 }
 
@@ -126,7 +121,10 @@ contract Quiz{
     }
     
     function isUserRegistered(string memory email) public view returns (bool) {
-        return users[email].isRegistered;
+        if(users[email].isRegistered == true)
+            return true;
+        else
+            return false;
     }
     
     function setUserAnswers(string memory email, uint[] memory userAnswers) public validStage(Stage.Play) {
@@ -136,7 +134,10 @@ contract Quiz{
     }
     
     function isQuizAttempted(string memory email) public view returns (bool) {
-        return users[email].quizCompleted;
+        if(users[email].quizCompleted == true)
+            return true;
+        else
+            return false;
     }
     
     function getUserAnswers(string memory email) public view returns (uint[] memory) {
@@ -152,7 +153,10 @@ contract Quiz{
     }
     
     function isPrizeClaimed(string memory email) public view returns (bool) {
-        return users[email].prizeClaimed;
+        if(users[email].prizeClaimed == true)
+            return true;
+        else
+            return false;
     }
     
     function destroyContract(address payable transferAddress) public isManager validStage(Stage.End) {
