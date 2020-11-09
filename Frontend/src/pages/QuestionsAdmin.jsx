@@ -102,6 +102,11 @@ class QuestionsAdmin extends Component {
             const accounts = await web3.eth.getAccounts();
             const instance = await instanceQuiz(this.state.quizContractAddress);
             await instance.methods.startQuiz().send({ from: accounts[0] });
+
+            const obj = {
+                _id: this.props.match.params.id
+            }
+            const response = await axios.post('http://localhost:9000/api/quizFactory/addQuizStartedTime', obj);
             toast.success("Quiz has started");
             this.setState({ stage: 2 });
         } catch (error) {
@@ -138,7 +143,6 @@ class QuestionsAdmin extends Component {
                 'id': this.props.match.params.id
             }
             const quiz = await axios.post("http://localhost:9000/api/quizFactory/removeQuiz", obj);
-            console.log("delete response",quiz.data);
 
             this.setState({ loading: false, disabled: false });
             this.props.history.replace('/quizPageAdmin');

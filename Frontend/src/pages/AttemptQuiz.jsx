@@ -9,16 +9,65 @@ import instanceQuiz from '../ethereum/instanceQuiz';
 
 class AttemptQuiz extends Component {
    
+    submitForm = React.createRef();
+
     state = { 
         questions: [],
         answers: '',
         loading: false,
-        disabled: false
+        disabled: false,
+        quizStartedTime: '',
+        duration: 960,
+        minutes: '',
+        seconds: ''
      }
 
     async componentDidMount() {
         const quiz = await axios.get('http://localhost:9000/api/quiz/' + this.props.match.params.id);
-        this.setState({ questions: quiz.data.questions });
+        const quizFactory = await axios.get('http://localhost:9000/api/quizFactory/' + this.props.match.params.id);
+        const quizStartedTime = quizFactory.data.quizStartedTime;
+        this.setState({ questions: quiz.data.questions, quizStartedTime });
+
+        const timeElapsed = (Date.now() - quizStartedTime)/1000;
+        console.log(timeElapsed);
+
+        if(timeElapsed > this.state.duration) {
+            //window.location(`user/quiz/${this.props.match.params.id}`);
+            this.props.history.replace(`/user/quiz/${this.props.match.params.id}`);
+        }
+
+        if(timeElapsed < this.state.duration) {
+            let seconds = this.state.duration - timeElapsed;
+            let minutes = parseInt(seconds/60);
+            seconds = parseInt(seconds%60);
+            this.setState({ minutes, seconds });
+
+            this.myInterval = setInterval(() => {
+                const { seconds, minutes } = this.state;
+    
+                if (seconds > 0) {
+                    this.setState(({ seconds }) => ({
+                        seconds: seconds - 1
+                    }))
+                }
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(this.myInterval);
+                        this.submitForm.current.submit();
+                    } else {
+                        this.setState(({ minutes }) => ({
+                            minutes: minutes - 1,
+                            seconds: 59
+                        }))
+                    }
+                } 
+            }, 1000);
+        }
+
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.myInterval);
     }
 
     handleChange = (e) => {
@@ -29,30 +78,32 @@ class AttemptQuiz extends Component {
         this.setState({ answers });
     }
 
-    handleSubmit = (e) => {
+    // handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     this.setState({ loading: true, disabled: true });
+        
+    //     let size = 0;
+    //     const { answers } = this.state;
+    //     console.log(answers);
+    //     for (const key in answers) {
+    //         if (answers.hasOwnProperty(key)) {
+    //             ++size;
+    //         }
+    //     }
+    //     if(size != this.state.questions.length){
+    //         toast.error("Please provide all answers!");
+    //         this.setState({ loading: false, disabled: false });
+    //     }
+    //     else
+    //         this.doSubmit();
+    // }
+
+    doSubmit = async (e) => {
         e.preventDefault();
         this.setState({ loading: true, disabled: true });
-        
-        let size = 0;
-        const { answers } = this.state;
-        console.log(answers);
-        for (const key in answers) {
-            if (answers.hasOwnProperty(key)) {
-                ++size;
-            }
-        }
-        if(size != this.state.questions.length){
-            toast.error("Please provide all answers!");
-            this.setState({ loading: false, disabled: false });
-        }
-        else
-            this.doSubmit();
-    }
-
-    doSubmit = async () => {
         console.log("submitted");
+        
         try {
-
             const ansKey = [];
             const { answers } = this.state;
             this.state.questions.map(question => {
@@ -64,6 +115,8 @@ class AttemptQuiz extends Component {
                         }
                     }
                 }
+                if(!(answers.hasOwnProperty(question._id)))
+                    ansKey.push(parseInt(0));
             });
 
             console.log(ansKey);
@@ -119,11 +172,18 @@ class AttemptQuiz extends Component {
     }
 
     render() { 
+        const { minutes, seconds } = this.state;
         return ( 
             <div className="container">
                 <ToastContainer />
                 <h2>Attempt Quiz</h2>
-                <form onSubmit={this.handleSubmit}>
+                <div>
+                { minutes === 0 && seconds === 0
+                    ? <h1>Busted!</h1>
+                    : <h1>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+                }
+            </div>
+                <form ref={this.submitForm} onSubmit={this.doSubmit}>
                     {this.renderForm()}
                     <Button type="submit" color="green" size="tiny" loading={this.state.loading} disabled={this.state.disabled} >Finish Attempt</Button>
                 </form>

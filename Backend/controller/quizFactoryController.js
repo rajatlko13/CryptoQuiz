@@ -53,8 +53,6 @@ const addQuiz = async (req,res) => {
 const addContractAddress = async (req,res) => {
     try{
         console.log('in addContractAddress api');
-        console.log(req.body);
-
         const quiz = await QuizFactory.findById(req.body._id);
         quiz['quizContractAddress'] = req.body.address;
         const q = await quiz.save();
@@ -63,6 +61,19 @@ const addContractAddress = async (req,res) => {
         res.status(400).json(err);
     }
 } 
+
+const addQuizStartedTime = async (req,res) => {
+    try {
+        console.log('in addQuizStartedTime api');
+        const quiz = await QuizFactory.findById(req.body._id);
+        console.log(Date.now());
+        quiz['quizStartedTime'] = Date.now();
+        const q = await quiz.save();
+        res.json(q);
+    } catch (error) {
+        res.json(error);
+    }
+}
 
 const updateQuiz = async (req,res) => {
     try{
@@ -90,4 +101,4 @@ const removeQuiz = async (req,res) => {
     }
 }
 
-module.exports = { getListQuizFactory, getQuiz, addQuiz, addContractAddress, updateQuiz, removeQuiz };
+module.exports = { getListQuizFactory, getQuiz, addQuiz, addContractAddress, addQuizStartedTime, updateQuiz, removeQuiz };

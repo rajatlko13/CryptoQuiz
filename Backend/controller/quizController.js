@@ -15,7 +15,6 @@ const getQuiz = async (req,res) => {
     try{
         console.log('in getQuiz api');
         const questionQuiz = await Quiz.findOne({ 'quizId': req.params.id });
-        console.log(questionQuiz);
         res.json(questionQuiz);
     }catch(err){
         res.json(err);
@@ -25,7 +24,6 @@ const getQuiz = async (req,res) => {
 const addQuestionQuiz = async (req,res) => {
     try{
         console.log('in addQuestionQuiz api');
-        console.log(req.body);
         const newQuestion = {
             question: req.body.question,
             option1: req.body.option1,
@@ -37,7 +35,6 @@ const addQuestionQuiz = async (req,res) => {
             { quizId: req.body.id},
             { $push: {questions: newQuestion}}
         );
-        console.log(quiz);
         // quiz.questions.push(newQuestion);
         // console.log("Again",quiz);
         // const nq = await quiz.save();

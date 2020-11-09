@@ -15,7 +15,7 @@ const quizFactorySchema = new mongoose.Schema({
         ref: 'Quiz'
     },
     quizStartedTime: {
-        type: Date
+        type: Number
     }
 }, {timestamps: true});
 
