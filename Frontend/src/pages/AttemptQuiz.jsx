@@ -14,10 +14,10 @@ class AttemptQuiz extends Component {
     state = { 
         questions: [],
         answers: '',
-        loading: false,
+        hidden: true,
         disabled: false,
         quizStartedTime: '',
-        duration: 960,
+        duration: 15280,
         minutes: '',
         seconds: ''
      }
@@ -53,7 +53,7 @@ class AttemptQuiz extends Component {
                 if (seconds === 0) {
                     if (minutes === 0) {
                         clearInterval(this.myInterval);
-                        this.submitForm.current.submit();
+                        this.submitForm.current.click();
                     } else {
                         this.setState(({ minutes }) => ({
                             minutes: minutes - 1,
@@ -100,12 +100,13 @@ class AttemptQuiz extends Component {
 
     doSubmit = async (e) => {
         e.preventDefault();
-        this.setState({ loading: true, disabled: true });
+        this.setState({ hidden: false, disabled: true });
         console.log("submitted");
         
         try {
             const ansKey = [];
             const { answers } = this.state;
+            console.log(answers);
             this.state.questions.map(question => {
                 for (const key in answers) {
                     if (answers.hasOwnProperty(key)) {
@@ -134,12 +135,12 @@ class AttemptQuiz extends Component {
             const instance = await instanceQuiz(this.props.history.location.state.quizContractAddress);
             await instance.methods.setUserAnswers(email, ansKey).send({ from: accounts[1] });
 
-            this.setState({ loading: false, disabled: false });
+            this.setState({ hidden: true, disabled: false });
             this.props.history.replace('/user/quiz/' + this.props.match.params.id);
         } catch (error) {
             console.log("error--",error);
             toast.error('Unexpected Error');
-            this.setState({ loading: false, disabled: false });
+            this.setState({ hidden: true, disabled: false });
         }
     }
 
@@ -179,13 +180,15 @@ class AttemptQuiz extends Component {
                 <h2>Attempt Quiz</h2>
                 <div>
                 { minutes === 0 && seconds === 0
-                    ? <h1>Busted!</h1>
-                    : <h1>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+                    ? <h1>Time Over!</h1>
+                    : <h1>Time Remaining- {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
                 }
             </div>
-                <form ref={this.submitForm} onSubmit={this.doSubmit}>
+                <form>  
                     {this.renderForm()}
-                    <Button type="submit" color="green" size="tiny" loading={this.state.loading} disabled={this.state.disabled} >Finish Attempt</Button>
+                    <button ref={this.submitForm} className="btn btn-danger" type="submit" onClick={this.doSubmit} disabled={this.state.disabled} >
+                        <span className="spinner-border spinner-border-sm" hidden={this.state.hidden}></span> Finish Attempt
+                    </button>
                 </form>
             </div>
          );

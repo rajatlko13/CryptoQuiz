@@ -1,59 +1,35 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'; 
+import VerifyAuthentication from './utilities/verifyAuthentication';
 
 class Home extends Component {
 
-    myButton = React.createRef();
-
-    state = {
-        minutes: 0,
-        seconds: 3
-    }
+    state = { 
+        admin: '',
+        user: ''
+     }
 
     componentDidMount() {
-        this.myInterval = setInterval(() => {
-            const { seconds, minutes } = this.state
-
-            if (seconds > 0) {
-                this.setState(({ seconds }) => ({
-                    seconds: seconds - 1
-                }))
-            }
-            if (seconds === 0) {
-                if (minutes === 0) {
-                    clearInterval(this.myInterval);
-                    this.myButton.current.classList.remove('btn-danger');
-                    this.myButton.current.classList.add('btn-warning');
-                    this.myButton.current.click();
-                } else {
-                    this.setState(({ minutes }) => ({
-                        minutes: minutes - 1,
-                        seconds: 59
-                    }))
-                }
-            } 
-        }, 1000)
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.myInterval)
-    }
-
-    clickButton = () => {
-        console.log("button clicked!!!");
+        const admin = VerifyAuthentication.isAdminAuthenticated();
+        const user = VerifyAuthentication.isUserAuthenticated();
+        this.setState({ admin, user });
     }
 
     render() { 
-        const { minutes, seconds } = this.state;
+        const { user, admin } = this.state;
+
         return ( 
-            <div className="container">
-                <h3 className="mx-2 my-2">Welcome to Home Page</h3>
-                <button ref={this.myButton} className="btn btn-danger" onClick={this.clickButton}>Go</button>
+            <div className="container text-center text-white" style={{textAlign: 'center', fontFamily: 'Goldman', marginTop: '10%'}}>
+                <p style={{ margin: '0', padding: '0', fontSize: '6vw', lineHeight: '1em', textShadow: '2px 2px 7px blue'}}>Learn More</p>
+                <p style={{ margin: '0', padding:'0', fontSize: '6vw', lineHeight: '1em', textShadow: '2px 2px 7px blue'}}>Earn More</p>
+                <p className="mt-2">Let your knowledge earn you some cryptos</p>
+                <hr className="w-25 mx-auto" />
+                { !user && !admin && 
                 <div>
-                { minutes === 0 && seconds === 0
-                    ? <h1>Busted!</h1>
-                    : <h1>Time Remaining: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+                    <Link to="/registration"><button className="btn btn-outline-primary mr-3 border-3" style={{fontFamily: 'Goldman'}}>Register</button></Link>
+                    <Link to="/login"><button className="btn btn-outline-warning ml-2 border-3" style={{fontFamily: 'Goldman'}}>Login</button></Link>
+                </div>
                 }
-            </div>
             </div>
 
          );

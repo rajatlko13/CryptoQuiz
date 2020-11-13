@@ -55,7 +55,7 @@ class ViewAnswersUser extends Component {
                         <Table.HeaderCell>{item.option3}</Table.HeaderCell>
                         <Table.HeaderCell>{item.option4}</Table.HeaderCell>
                         <Table.HeaderCell>{correctAnswers[index]}</Table.HeaderCell>
-                        <Table.HeaderCell>{userAnswers[index]}</Table.HeaderCell>
+                        <Table.HeaderCell>{userAnswers[index]!=='0'? userAnswers[index] : '-'}</Table.HeaderCell>
                         <Table.HeaderCell>
                             { correctAnswers[index]==userAnswers[index]? <Label color="green" circular>Correct</Label> : <Label color="red" circular>Wrong</Label> }
                         </Table.HeaderCell>

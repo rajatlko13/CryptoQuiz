@@ -3,6 +3,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import Joi from 'joi-browser';
 import 'react-toastify/dist/ReactToastify.css';
+import { Button } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+import AdminLoginSvg from '../images/adminLoginSvg';
 
 class AdminLogin extends Component {
     
@@ -92,24 +95,37 @@ class AdminLogin extends Component {
 
     render() { 
         return ( 
-            <React.Fragment>
+            <div>
                 <ToastContainer />
-                <h5 className="mx-2 my-2">Admin Login Form</h5>
-                <form className="container w-25 " style={{float:"left"}}  onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label>Email address</label>
-                        <input name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={this.state.admin.email} onChange={this.onChange} />
-                    </div>
-                    {this.state.error.email && <div className="alert alert-danger my-2">{this.state.error.email}</div>}
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input name="password" type="password" className="form-control" id="exampleInputPassword1" value={this.state.admin.password} onChange={this.onChange}/>
-                    </div>
-                    {this.state.error.password && <div className="alert alert-danger my-2">{this.state.error.password}</div>}
+                <div className="container" style={{marginTop: '14vh'}}>
+                    <div className="row mx-auto" style={{ width: '600px', boxShadow: '7px 7px 15px cyan'}}>
+                        <div className="col-lg-4 bg-secondary p-2" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <div className="mx-auto">
+                                <AdminLoginSvg width="150px" />
+                            </div>
+                        </div>
+                        <div className="col-lg-8 bg-dark" style={{color: 'cyan', fontFamily: 'Goldman'}}>
+                            <h3 className="text-center mt-4 mb-0 pb-0" style={{ fontFamily: 'Goldman'}}>Admin Login Form</h3>
+                            <hr className=" mx-auto w-25" />
+                            <form onSubmit={this.handleSubmit} className="px-5 pb-4 pt-0">
+                                <div className="form-group">
+                                    <label>Email address</label>
+                                    <input name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={this.state.admin.email} onChange={this.onChange} />
+                                </div>
+                                {this.state.error.email && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.email}</div>}
+                                <div className="form-group mt-2">
+                                    <label>Password</label>
+                                    <input name="password" type="password" className="form-control" id="exampleInputPassword1" value={this.state.admin.password} onChange={this.onChange}/>
+                                </div>
+                                {this.state.error.password && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.password}</div>}
 
-                    <button type="submit" className="btn btn-primary my-2">Submit</button>
-                </form>
-            </React.Fragment>
+                                {/* <button type="submit" className="btn my-3 font-weight-bold" style={{backgroundColor: 'cyan'}}>Submit</button> */}
+                                <Button type="submit" className="my-3" inverted color="teal">Login</Button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
          );
     }
 }

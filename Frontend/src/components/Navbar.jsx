@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {Link, NavLink} from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 import VerifyAuthentication from '../utilities/verifyAuthentication';
+import Logo from '../images/logo';
 
 class Navbar extends Component {
     state = { 
@@ -17,11 +19,11 @@ class Navbar extends Component {
     render() { 
 
         const { admin, user } = this.state;
-
+        
         return ( 
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark text-white">
+            <nav className="navbar navbar-expand-lg navbar-dark text-white"  style={{fontFamily: 'Goldman', fontSize: '15px'}}>
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">CryptoQuiz</Link>
+                    <Link className="navbar-brand mr-5" to="/" style={{fontSize: '30px'}}>CryptoQuiz<Logo width="50px" /></Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
@@ -39,14 +41,19 @@ class Navbar extends Component {
                         { admin && 
                         <React.Fragment>
                             <NavLink className="nav-link" to="/quizPageAdmin">QuizPageAdmin</NavLink>
-                            <NavLink className="nav-link" to="/logout">Logout</NavLink>
+                            <NavLink className="nav-link" style={{position: 'absolute' , right: '2vw'}} to="/logout">
+                                <Button inverted color="red" style={{ fontFamily: 'Goldman'}}>Logout</Button>
+                                {/* <button className="btn btn-outline-danger" style={{position: 'absolute' , right: '2px'}}>Logout</button> */}
+                            </NavLink>
                         </React.Fragment> }
                         { user && 
                         <React.Fragment>
                             <NavLink className="nav-link" to="/userPage1">UserPage1</NavLink>
                             <NavLink className="nav-link" to="/quizPageUser">Quizzes</NavLink>
                             <NavLink className="nav-link" to="/userCoins">QuizCoins</NavLink>
-                            <NavLink className="nav-link" to="/logout">Logout</NavLink>
+                            <NavLink className="nav-link" style={{position: 'absolute' , right: '2vw'}} to="/logout">
+                                <Button inverted color="red" style={{fontFamily: 'Goldman'}}>Logout</Button>
+                            </NavLink>
                         </React.Fragment> }
                     </div>
                     </div>

@@ -8,6 +8,7 @@ import 'semantic-ui-css/semantic.min.css';
 import web3 from '../ethereum/web3';
 import instanceQuizFactory from '../ethereum/instanceQuizFactory';
 import { addressEIP20 } from '../ethereum/addressConfig.json';
+import NewQuizSvg from '../images/newQuizSvg';
  
 class NewQuizPage extends Component {
     
@@ -106,24 +107,32 @@ class NewQuizPage extends Component {
             <React.Fragment>
                 {/* <h1>Hello {this.props.match.params.id}</h1> */}
                 <ToastContainer />
-                <h2 className="text-center">Create New Quiz</h2>
-                <form className="container w-25" onSubmit={this.handleSubmit}>   
-                    <div className="form-group my-2">
-                        <label>Quiz Name</label>
-                        <input name="name" type="text" className="form-control" id="exampleInputName1" value={this.state.quiz.name} onChange={this.onChange} />
+                <div className="my-5 mx-auto" style={{width: '25vw', fontFamily: 'Goldman', border: '3px solid rgb(243,9,212)', boxShadow: '5px 5px 15px rgb(243,9,212)', background: 'linear-gradient(to right bottom, rgba(104,177,249,0.9), rgba(243,9,212,0.9))' }}>
+                    <h3 className="text-center my-3" style={{fontFamily: 'Goldman'}}>Create New Quiz</h3>
+                    <hr className="w-25 mx-auto text-dark font-weight-bolder" />
+                    <div className="text-center my-4">
+                        <NewQuizSvg width='150px' />
                     </div>
-                    {this.state.error.name && <div className="alert alert-danger my-2">{this.state.error.name}</div>}
-                    <div className="form-group my-2">
-                        <label>Description</label>
-                        <input name="description" type="text" className="form-control" id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
-                    </div>
-                    {this.state.error.description && <div className="alert alert-danger my-2">{this.state.error.description}</div>}
-            
-                    <Link to='/quizPageAdmin'>
-                        <button type="reset" className="btn btn-secondary mx-2 my-3">Cancel</button>
-                    </Link>
-                    <Button type="submit" color="blue" loading={this.state.loading} disabled={this.state.disabled} className="mx-2 my-3">Create Quiz</Button>
-                </form>
+                    <form onSubmit={this.handleSubmit} className="px-3">   
+                        <div className="form-group my-2">
+                            <label>Quiz Name</label>
+                            <input name="name" type="text" className="form-control" id="exampleInputName1" value={this.state.quiz.name} onChange={this.onChange} />
+                        </div>
+                        {this.state.error.name && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.name}</div>}
+                        <div className="form-group my-2">
+                            <label>Description</label>
+                            <input name="description" type="text" className="form-control" id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
+                        </div>
+                        {this.state.error.description && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.description}</div>}
+
+                        <div className="text-center">
+                            <Button type="submit" color='green' loading={this.state.loading} disabled={this.state.disabled} className="px-2 font-weight-light" style={{fontFamily: 'Goldman'}}>Create Quiz</Button>
+                            <Link to='/quizPageAdmin'>
+                                <button type="reset" style={{fontFamily: 'Goldman'}} className="btn btn-dark border-2 mx-2 my-3">Cancel</button>
+                            </Link>
+                        </div>
+                    </form>
+                </div>
             </React.Fragment>
          );
     }
