@@ -85,23 +85,22 @@ class ViewAnswersUser extends Component {
         return ( 
             <div className="container">
                 <ToastContainer/>
-                <h3>View Answers</h3>
-                <h4>Marks : {this.state.marks}/{this.state.correctAnswers.length}</h4>
-                <h4>Prize Won : {parseInt(this.state.marks*3/2)} QC</h4>
+                <h3 className='mb-1' style={{fontFamily: 'Goldman'}}><span style={{color: 'red'}}>Marks : </span>{this.state.marks}/{this.state.correctAnswers.length}</h3>
+                <h3 className='mt-0' style={{fontFamily: 'Goldman'}}><span style={{color: 'red'}}>Prize Won : </span>{parseInt(this.state.marks*3/2)} QC</h3>
                 { !this.state.isPrizeClaimed && 
-                    <Button className="my-2" style={{float: "right"}} onClick={this.claimPrize} color="blue" loading={this.state.loading} disabled={this.state.disabled} >Claim Prize</Button> }
-                { this.state.isPrizeClaimed && <Label color="pink" style={{float: 'right', marginBottom: 10}} size="large" circular>Prize Claimed</Label> }
-                <Table celled color='black' striped selectable inverted textAlign="center" verticalAlign="middle" unstackable>
+                    <Button className="my-2 font-weight-light" style={{float: "right", fontFamily: 'Goldman'}} onClick={this.claimPrize} color="blue" loading={this.state.loading} disabled={this.state.disabled} >Claim Prize</Button> }
+                { this.state.isPrizeClaimed && <Label color="pink" className="font-weight-light" style={{float: 'right', marginBottom: 10, fontFamily: 'Goldman'}} size="large" circular>Prize Claimed</Label> }
+                <Table celled color='black' striped selectable textAlign="center" verticalAlign="middle" unstackable className="font-weight-light" style={{background: 'linear-gradient(to right bottom, rgba(254,230,104,1), rgba(242,37,212,1))'}}>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Question</Table.HeaderCell>
-                            <Table.HeaderCell>Option 1</Table.HeaderCell>
-                            <Table.HeaderCell>Option 2</Table.HeaderCell>
-                            <Table.HeaderCell>Option 3</Table.HeaderCell>
-                            <Table.HeaderCell>Option 4</Table.HeaderCell>
-                            <Table.HeaderCell>Correct Answer</Table.HeaderCell>
-                            <Table.HeaderCell>Your Answer</Table.HeaderCell>
-                            <Table.HeaderCell>Result</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Question</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 1</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 2</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 3</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 4</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Correct Answer</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Your Answer</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Result</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 

@@ -110,14 +110,14 @@ class AdminLogin extends Component {
                             <form onSubmit={this.handleSubmit} className="px-5 pb-4 pt-0">
                                 <div className="form-group">
                                     <label>Email address</label>
-                                    <input name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={this.state.admin.email} onChange={this.onChange} />
+                                    <input name="email" type="email" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputEmail1" aria-describedby="emailHelp" value={this.state.admin.email} onChange={this.onChange} />
                                 </div>
-                                {this.state.error.email && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.email}</div>}
+                                {this.state.error.email && <div className="my-2" style={{color: 'red'}}>{this.state.error.email}</div>}
                                 <div className="form-group mt-2">
                                     <label>Password</label>
-                                    <input name="password" type="password" className="form-control" id="exampleInputPassword1" value={this.state.admin.password} onChange={this.onChange}/>
+                                    <input name="password" type="password" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputPassword1" value={this.state.admin.password} onChange={this.onChange}/>
                                 </div>
-                                {this.state.error.password && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.password}</div>}
+                                {this.state.error.password && <div className="my-2" style={{color: 'red'}}>{this.state.error.password}</div>}
 
                                 {/* <button type="submit" className="btn my-3 font-weight-bold" style={{backgroundColor: 'cyan'}}>Submit</button> */}
                                 <Button type="submit" className="my-3" inverted color="teal">Login</Button>

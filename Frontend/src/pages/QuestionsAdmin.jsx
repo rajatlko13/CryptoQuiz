@@ -158,7 +158,6 @@ class QuestionsAdmin extends Component {
             <div className="container">
                 <ToastContainer />
                 {/* { this.showNotif() || toast.success('Done') } */}
-                <h5>Welcome to QuestionsAdmin</h5>
                 
                 { this.state.stage == 0  && <Button color='green' className='mt-3 mx-2' onClick={this.startReg} loading={this.state.loading} disabled={this.state.disabled} >Start Registration</Button> }
                 { this.state.stage == 1  && <Button color='green' className='mt-3 mx-2' onClick={this.startQuiz} loading={this.state.loading} disabled={this.state.disabled} >Start Quiz</Button> }
@@ -170,19 +169,19 @@ class QuestionsAdmin extends Component {
                                                 <Button color='blue' className='mt-3 mx-2'>Publish Answers</Button>
                                             </Link> }
                 { this.state.stage == 4  && <Button color='pink' className='mt-3 mx-2' onClick={this.deleteQuiz } loading={this.state.loading} disabled={this.state.disabled} >Delete Quiz</Button> }
-                { this.state.stage < 2  && <Link to={`/admin/newQuestion/${this.props.match.params.id}`} style={{float:"right"}} ><Button color='blue' className='mt-3 mx-2'>+ Add Question</Button></Link> }
+                { this.state.stage < 2  && <Link to={`/admin/newQuestion/${this.props.match.params.id}`} style={{float:"right"}} ><Button color='blue' className='mt-3 mx-2 px-2'>+ Add Question</Button></Link> }
 
                 { this.state.questions.length>0 ? (
-                <Table celled color='black' striped selectable inverted textAlign="center" verticalAlign="middle" unstackable>
+                <Table celled selectable textAlign="center" verticalAlign="middle" unstackable className="font-weight-light" style={{background: 'linear-gradient(to right bottom, rgba(254,230,104,1), rgba(242,37,212,1))'}}>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Question</Table.HeaderCell>
-                            <Table.HeaderCell>Option 1</Table.HeaderCell>
-                            <Table.HeaderCell>Option 2</Table.HeaderCell>
-                            <Table.HeaderCell>Option 3</Table.HeaderCell>
-                            <Table.HeaderCell>Option 4</Table.HeaderCell>
-                            <Table.HeaderCell>Edit</Table.HeaderCell>
-                            <Table.HeaderCell>Delete</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Question</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 1</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 2</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 3</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Option 4</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Edit</Table.HeaderCell>
+                            <Table.HeaderCell className="bg-dark text-white">Delete</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
 

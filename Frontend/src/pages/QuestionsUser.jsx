@@ -104,15 +104,19 @@ class QuestionsUser extends Component {
 
         const { isRegistered, hasAttempted }  = this.state;
         return ( 
-            <div className="container">
+            <div className="container my-4" style={{fontFamily: 'Goldman'}}>
                 <ToastContainer />
-                <h5>Welcome to QuestionsUser</h5>
-                <label style={{fontWeight: 'bold'}}>Quiz Title :</label> <p>{this.state.quiz.name}</p>
-                <label style={{fontWeight: 'bold'}}>Description :</label> <p>{this.state.quiz.description}</p>
-                { this.state.stage == 0 && <h5>Registrations will begin shortly...</h5>}
+                <div className="mb-2" style={{fontSize: '20px'}}>
+                    <label style={{fontWeight: 'bold', color: 'red'}}>Quiz Title : </label>
+                    <span> {this.state.quiz.name}</span>
+                    <br/><br/>
+                    <label style={{fontWeight: 'bold', color: 'red'}}>Description :</label> 
+                    <span> {this.state.quiz.description}</span>
+                </div>
+                { this.state.stage == 0 && <h3 style={{color: 'cyan', fontFamily: 'Goldman'}}>Registrations will begin shortly...</h3>}
                 { this.state.stage == 1 && !isRegistered  && <Button color='blue' className='mt-3 mx-2' onClick={this.regQuiz} loading={this.state.loading} disabled={this.state.disabled} >Register</Button> }
                 { this.state.stage == 1 && isRegistered  && <Label color="green" size="large" circular>Registered</Label> }
-                { this.state.stage > 1 && !isRegistered && <h5>Registrations Closed! You have not registered for this Quiz.</h5>}
+                { this.state.stage > 1 && !isRegistered && <h3 style={{color: 'cyan', fontFamily: 'Goldman'}}>Registrations Closed! You have not registered for this Quiz.</h3>}
                 { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={{ pathname: "/user/attemptQuiz/" + this.props.match.params.id, 
                                                                                         state: {
                                                                                             quizContractAddress: this.state.quizContractAddress

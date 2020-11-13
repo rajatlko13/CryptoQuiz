@@ -92,7 +92,6 @@ class NewQuizPage extends Component {
                 'address': address
             };
             const quiz = await axios.post('http://localhost:9000/api/quizFactory/addContractAddress', obj);
-            console.log("quiz=",quiz);
             this.setState({ loading: false, disabled: false });
             this.props.history.push("/quizPageAdmin");
         } catch (error) {
@@ -111,17 +110,17 @@ class NewQuizPage extends Component {
                     <h3 className="text-center my-3" style={{fontFamily: 'Goldman'}}>Create New Quiz</h3>
                     <hr className="w-25 mx-auto text-dark font-weight-bolder" />
                     <div className="text-center my-4">
-                        <NewQuizSvg width='150px' />
+                        <NewQuizSvg width='130px' />
                     </div>
                     <form onSubmit={this.handleSubmit} className="px-3">   
                         <div className="form-group my-2">
                             <label>Quiz Name</label>
-                            <input name="name" type="text" className="form-control" id="exampleInputName1" value={this.state.quiz.name} onChange={this.onChange} />
+                            <input name="name" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputName1" value={this.state.quiz.name} onChange={this.onChange} />
                         </div>
                         {this.state.error.name && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.name}</div>}
                         <div className="form-group my-2">
                             <label>Description</label>
-                            <input name="description" type="text" className="form-control" id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
+                            <input name="description" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
                         </div>
                         {this.state.error.description && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.description}</div>}
 

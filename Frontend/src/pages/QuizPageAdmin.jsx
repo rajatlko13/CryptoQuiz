@@ -22,7 +22,7 @@ class QuizPageAdmin extends Component {
                 <div className="col-lg-4 my-3" key={index} >
                     <Card style={{background: 'linear-gradient( to right bottom, rgba(141,63,252,1), rgba(68,242,134,0.8))', border: '2px solid rgb(68,242,134)', boxShadow: '2px 2px 10px rgb(68,242,134)'}}>
                         <Card.Content key={quiz.name} className="py-2"><Label color="orange" size='big' ribbon>{quiz.name}</Label></Card.Content>
-                        <Card.Content key={quiz.description} description={quiz.description} />
+                        <Card.Content key={quiz.description} className="text-white">{quiz.description}</Card.Content>
                         <Card.Content key={index} className="py-2" extra>
                             <Link key='1' to={`/admin/quiz/${quiz._id}`}>
                                 <Button color='teal' inverted className="font-weight-light" style={{fontFamily: 'Goldman'}}>View</Button>
