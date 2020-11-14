@@ -14,6 +14,21 @@ const quizFactorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Quiz'
     },
+    regStartDate: {
+        type: String
+    },
+    regStartTime: {
+        type: String
+    },
+    playStartDate: {
+        type: String
+    },
+    playStartTime: {
+        type: String
+    },
+    duration: {
+        type: Number
+    },
     quizStartedTime: {
         type: Number
     }

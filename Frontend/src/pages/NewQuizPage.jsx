@@ -15,7 +15,12 @@ class NewQuizPage extends Component {
     state = { 
         quiz: {
             name: '',
-            description: ''
+            description: '',
+            regStartDate: '',
+            regStartTime: '',
+            playStartDate: '',
+            playStartTime: '',
+            duration: ''
         },
         error: {},
         loading: false,
@@ -24,7 +29,12 @@ class NewQuizPage extends Component {
 
     schema = {
         name: Joi.string().required().label('Quiz Name'),
-        description: Joi.string().required().label('Description')
+        description: Joi.string().required().label('Description'),
+        regStartDate: Joi.date().min('now').required().label('Reg Start Date'),
+        regStartTime: Joi.string().required().label('Reg Start Time'),
+        playStartDate: Joi.date().min('now').required().label('Quiz Start Date'),
+        playStartTime: Joi.string().required().label('Play Start Time'),
+        duration: Joi.number().min(1).required().label('Duration')
     }
 
     validate = () => {
@@ -123,7 +133,32 @@ class NewQuizPage extends Component {
                             <input name="description" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
                         </div>
                         {this.state.error.description && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.description}</div>}
-
+                        <div className="form-group my-2">
+                            <label>Registration Start Date</label>
+                            <input name="regStartDate" type="Date" className="form-control" style={{fontFamily: 'Goldman'}} id="regStartDate" value={this.state.quiz.regStartDate} onChange={this.onChange}/>
+                        </div>
+                        {this.state.error.regStartDate && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regStartDate}</div>}
+                        <div className="form-group my-2">
+                            <label>Registration Start Time</label>
+                            <input name="regStartTime" type="time" className="form-control" style={{fontFamily: 'Goldman'}} id="regStartTime" value={this.state.quiz.regStartTime} onChange={this.onChange}/>
+                        </div>
+                        {this.state.error.regStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regStartTime}</div>}
+                        <div className="form-group my-2">
+                            <label>Quiz Start Date</label>
+                            <input name="playStartDate" type="Date" className="form-control" style={{fontFamily: 'Goldman'}} id="playStartDate" value={this.state.quiz.playStartDate} onChange={this.onChange}/>
+                        </div>
+                        {this.state.error.playStartDate && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartDate}</div>}
+                        <div className="form-group my-2">
+                            <label>Quiz Start Time</label>
+                            <input name="playStartTime" type="time" className="form-control" style={{fontFamily: 'Goldman'}} id="playStartTime" value={this.state.quiz.playStartTime} onChange={this.onChange}/>
+                        </div>
+                        {this.state.error.playStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartTime}</div>}
+                        <div className="form-group my-2">
+                            <label>Duration</label>
+                            <input name="duration" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="duration" value={this.state.quiz.duration} onChange={this.onChange}/>
+                        </div>
+                        {this.state.error.duration && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.duration}</div>}
+                        
                         <div className="text-center">
                             <Button type="submit" color='green' loading={this.state.loading} disabled={this.state.disabled} className="px-2 font-weight-light" style={{fontFamily: 'Goldman'}}>Create Quiz</Button>
                             <Link to='/quizPageAdmin'>

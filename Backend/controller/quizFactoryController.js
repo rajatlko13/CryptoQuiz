@@ -28,7 +28,12 @@ const addQuiz = async (req,res) => {
         console.log(req.body);
         const newQuiz = new QuizFactory({
             name: req.body.name,
-            description: req.body.description
+            description: req.body.description,
+            regStartDate: req.body.regStartDate,
+            regStartTime: req.body.regStartTime,
+            playStartDate: req.body.playStartDate,
+            playStartTime: req.body.playStartTime,
+            duration: req.body.duration
         });
         const quiz = await newQuiz.save();
         const quizBlock = new Quiz({

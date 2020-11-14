@@ -17,7 +17,7 @@ class AttemptQuiz extends Component {
         hidden: true,
         disabled: false,
         quizStartedTime: '',
-        duration: 15280,
+        duration: '',
         minutes: '',
         seconds: ''
      }
@@ -26,7 +26,8 @@ class AttemptQuiz extends Component {
         const quiz = await axios.get('http://localhost:9000/api/quiz/' + this.props.match.params.id);
         const quizFactory = await axios.get('http://localhost:9000/api/quizFactory/' + this.props.match.params.id);
         const quizStartedTime = quizFactory.data.quizStartedTime;
-        this.setState({ questions: quiz.data.questions, quizStartedTime });
+        const duration = quizFactory.data.duration * 60;
+        this.setState({ questions: quiz.data.questions, quizStartedTime, duration});
 
         const timeElapsed = (Date.now() - quizStartedTime)/1000;
         console.log(timeElapsed);
