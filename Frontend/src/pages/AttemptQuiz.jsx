@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button } from 'semantic-ui-react';
+import { Button, Label } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import web3 from '../ethereum/web3';
@@ -147,24 +147,24 @@ class AttemptQuiz extends Component {
     renderForm = () => {
         const questions = this.state.questions.map((question,index) => {
             return (
-                <div key={index} className="my-3">
+                <div key={index} className="my-3 p-3" style={{color: 'white', fontSize: '16px', fontFamily: 'Goldman', border: '2px solid cyan', background: 'linear-gradient(to right bottom, rgba(0,200,255,0.8), rgba(250,190,0,0.7))'}}>
                     <label>{question.question}</label>
                     <br/>
                     <div className="form-check form-check-inline">
                         <input className="form-check-input" type="radio" name={question._id} value="1" onChange={this.handleChange} checked={this.state.answers[question._id] == '1'} />
-                        <label className="form-check-label">{question.option1}</label>
+                        <label className="form-check-label pt-1">{question.option1}</label>
                     </div>
                     <div className="form-check form-check-inline">
                         <input className="form-check-input" type="radio" name={question._id} value="2" onChange={this.handleChange} checked={this.state.answers[question._id] == '2'} />
-                        <label className="form-check-label">{question.option2}</label>
+                        <label className="form-check-label pt-1">{question.option2}</label>
                     </div>
                     <div className="form-check form-check-inline">
                         <input className="form-check-input" type="radio" name={question._id} value="3" onChange={this.handleChange} checked={this.state.answers[question._id] == '3'} />
-                        <label className="form-check-label">{question.option3}</label>
+                        <label className="form-check-label pt-1">{question.option3}</label>
                     </div>
                     <div className="form-check form-check-inline">
                         <input className="form-check-input" type="radio" name={question._id} value="4" onChange={this.handleChange} checked={this.state.answers[question._id] == '4'} />
-                        <label className="form-check-label">{question.option4}</label>
+                        <label className="form-check-label pt-1">{question.option4}</label>
                     </div>
                 </div>
             );
@@ -177,16 +177,16 @@ class AttemptQuiz extends Component {
         return ( 
             <div className="container">
                 <ToastContainer />
-                <h2>Attempt Quiz</h2>
-                <div>
-                { minutes === 0 && seconds === 0
-                    ? <h1>Time Over!</h1>
-                    : <h1>Time Remaining- {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
-                }
-            </div>
+                <div style={{float: 'right'}}>
+                    { minutes === 0 && seconds === 0
+                        ? <Label color='red' size='large'>Time Over!</Label>
+                        : <Label color='purple' size='large'>{minutes}m : {seconds < 10 ? `0${seconds}` : seconds}s</Label>
+                    }
+                </div>
+                <h1 style={{fontFamily: 'Goldman'}}>Quiz</h1>
                 <form>  
                     {this.renderForm()}
-                    <button ref={this.submitForm} className="btn btn-danger" type="submit" onClick={this.doSubmit} disabled={this.state.disabled} >
+                    <button ref={this.submitForm} className="btn btn-danger" style={{fontFamily: 'Goldman'}} type="submit" onClick={this.doSubmit} disabled={this.state.disabled} >
                         <span className="spinner-border spinner-border-sm" hidden={this.state.hidden}></span> Finish Attempt
                     </button>
                 </form>
