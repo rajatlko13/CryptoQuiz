@@ -33,7 +33,8 @@ const addQuiz = async (req,res) => {
             regStartTime: req.body.regStartTime,
             playStartDate: req.body.playStartDate,
             playStartTime: req.body.playStartTime,
-            duration: req.body.duration
+            duration: req.body.duration,
+            regCost: req.body.regCost
         });
         const quiz = await newQuiz.save();
         const quizBlock = new Quiz({

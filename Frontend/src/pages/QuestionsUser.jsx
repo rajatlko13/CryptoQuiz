@@ -58,7 +58,8 @@ class QuestionsUser extends Component {
             // const res = await axios.post('http://localhost:9000/api/answers/registerUser/' + this.props.match.params.id, { user });
             const accounts = await web3.eth.getAccounts();
             const instanceEIP = await instanceEIP20;
-            await instanceEIP.methods.transfer(addressQuizFactory, 5).send({ from: accounts[1] });
+            const { regCost } = this.state.quiz;
+            await instanceEIP.methods.transfer(addressQuizFactory, regCost).send({ from: accounts[1] });
             const instance = await instanceQuiz(this.state.quizContractAddress);
             await instance.methods.registerUser(email).send({ from: accounts[1] });
             toast.success("Registration Successful!");
@@ -105,12 +106,15 @@ class QuestionsUser extends Component {
         return ( 
             <div className="container my-4" style={{fontFamily: 'Goldman'}}>
                 <ToastContainer />
-                <Label className="mb-4" style={{fontSize: '20px', fontWeight: 'normal'}}>
+                <Label className="mb-4" style={{fontSize: '15px', fontWeight: 'normal'}}>
                     <label style={{color: 'red'}}>Quiz Title : </label>
                     <span> {this.state.quiz.name}</span>
                     <br/><br/>
                     <label style={{color: 'red'}}>Description :</label> 
                     <span> {this.state.quiz.description}</span>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Registration Cost : </label>
+                    <span> {this.state.quiz.regCost} QC</span>
                     <br/><br/>
                     <label style={{color: 'red'}}>Registration Start Date : </label>
                     <span> {this.state.quiz.regStartDate}</span>
@@ -123,6 +127,9 @@ class QuestionsUser extends Component {
                     <br/><br/>
                     <label style={{color: 'red'}}>Quiz Start Time : </label>
                     <span> {this.state.quiz.playStartTime}</span>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Registration Cost : </label>
+                    <span> {this.state.quiz.regCost} QC</span>
                     <br/><br/>
                     <label style={{color: 'red'}}>Duration : </label>
                     <span> {this.state.quiz.duration} min</span>

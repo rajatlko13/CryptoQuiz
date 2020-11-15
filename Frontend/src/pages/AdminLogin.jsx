@@ -120,7 +120,7 @@ class AdminLogin extends Component {
                                 {this.state.error.password && <div className="my-2" style={{color: 'red'}}>{this.state.error.password}</div>}
 
                                 {/* <button type="submit" className="btn my-3 font-weight-bold" style={{backgroundColor: 'cyan'}}>Submit</button> */}
-                                <Button type="submit" className="my-3" inverted color="teal">Login</Button>
+                                <Button type="submit" className="my-3 font-weight-light" style={{fontFamily: 'Goldman'}} inverted color="teal">Login</Button>
                             </form>
                         </div>
                     </div>

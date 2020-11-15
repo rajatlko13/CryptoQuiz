@@ -20,6 +20,7 @@ class NewQuizPage extends Component {
             regStartTime: '',
             playStartDate: '',
             playStartTime: '',
+            regCost: '',
             duration: ''
         },
         error: {},
@@ -34,6 +35,7 @@ class NewQuizPage extends Component {
         regStartTime: Joi.string().required().label('Reg Start Time'),
         playStartDate: Joi.date().min('now').required().label('Quiz Start Date'),
         playStartTime: Joi.string().required().label('Play Start Time'),
+        regCost: Joi.number().min(0).required().label('Registration Cost'),
         duration: Joi.number().min(1).required().label('Duration')
     }
 
@@ -157,16 +159,28 @@ class NewQuizPage extends Component {
                                 {this.state.error.playStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartTime}</div>}
                             </div>
                         </div>
-                        <div className="form-group my-2">
-                            <label>Duration</label>
-                            <div className="input-group">
-                                <input name="duration" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="duration" value={this.state.quiz.duration} onChange={this.onChange}/>
-                                <div className="input-group-append">
-                                    <span className="input-group-text">min</span>
+                        <div className='row'>
+                            <div className="form-group my-2 col-lg-6">
+                                <label>Registration Cost</label>
+                                <div className="input-group">
+                                    <input name="regCost" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="regCost" value={this.state.quiz.regCost} onChange={this.onChange}/>
+                                    <div className="input-group-append">
+                                        <span className="input-group-text">QC</span>
+                                    </div>
                                 </div>
+                                {this.state.error.regCost && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regCost}</div>}
+                            </div>
+                            <div className="form-group my-2 col-lg-6">
+                                <label>Duration</label>
+                                <div className="input-group">
+                                    <input name="duration" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="duration" value={this.state.quiz.duration} onChange={this.onChange}/>
+                                    <div className="input-group-append">
+                                        <span className="input-group-text">minutes</span>
+                                    </div>
+                                </div>
+                                {this.state.error.duration && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.duration}</div>}
                             </div>
                         </div>
-                        {this.state.error.duration && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.duration}</div>}
                         
                         <div className="text-center">
                             <Button type="submit" color='green' loading={this.state.loading} disabled={this.state.disabled} className="px-2 font-weight-light" style={{fontFamily: 'Goldman'}}>Create Quiz</Button>

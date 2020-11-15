@@ -13,16 +13,15 @@ const deployQuizFactory = async () => {
     .send({from: accounts[0]});
 
     console.log('Deployed to address ',result.options.address); 
-    // Ropesten-
+    // Ropsten-
     // 0xB3c2E74DB2fB01aE95c4F01b15d8d36Dd7dD4dE8
     // 0xE9BcFf27C2FC2c44C4EeF403E0b6dba86e053f8f
     // 0xd7C5a8001A82E67FDE00Ba47D78df0c7b0D6aC04
 
     // Rinkeby-
+    // 0xaaBa44eC1A195D2190CF214278E4639189EC3dB4
+    // 0xb1d4764e78858fDF4761BE08b78e0f0b50460Bf7
     // 0x8E221F63B2c9dd911DAE789f35F8117D06D9bDF3
-    // 0x9D96aE41Fcc91DD8465611e41D83ce70f8933ebb
-    // 0x2B0Dd5486F9E0A6071f2E199ca1A2bb87d7039c4
-    // 0x5Fbb011B3A0CD0117D1F6d8e582668c9192eA237
 }
 
 deployQuizFactory();

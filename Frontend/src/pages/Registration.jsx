@@ -110,27 +110,27 @@ class Registration extends Component {
                             <form onSubmit={this.handleSubmit} className="px-5 pb-4 pt-0">
                                 <div className="form-group">
                                     <label>Name</label>
-                                    <input name="name" type="text" className="form-control" id="exampleInputName1" value={this.state.user.name} onChange={this.onChange} />
+                                    <input name="name" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputName1" value={this.state.user.name} onChange={this.onChange} />
                                 </div>
-                                {this.state.error.name && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.name}</div>}
+                                {this.state.error.name && <div className="my-2" style={{color: 'red'}}>{this.state.error.name}</div>}
                                 <div className="form-group mt-2">
                                     <label>Age</label>
-                                    <input name="age" type="number" className="form-control" id="exampleInputAge1" value={this.state.user.age} onChange={this.onChange} />
+                                    <input name="age" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputAge1" value={this.state.user.age} onChange={this.onChange} />
                                 </div>
-                                {this.state.error.age && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.age}</div>}
+                                {this.state.error.age && <div className="my-2" style={{color: 'red'}}>{this.state.error.age}</div>}
                                 <div className="form-group mt-2">
                                     <label>Email address</label>
-                                    <input name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={this.state.user.email} onChange={this.onChange} />
+                                    <input name="email" type="email" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputEmail1" aria-describedby="emailHelp" value={this.state.user.email} onChange={this.onChange} />
                                     <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                                 </div>
-                                {this.state.error.email && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.email}</div>}
+                                {this.state.error.email && <div className="my-2" style={{color: 'red'}}>{this.state.error.email}</div>}
                                 <div className="form-group mt-2">
                                     <label>Password</label>
-                                    <input name="password" type="password" className="form-control" id="exampleInputPassword1" value={this.state.user.password} onChange={this.onChange}/>
+                                    <input name="password" type="password" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputPassword1" value={this.state.user.password} onChange={this.onChange}/>
                                 </div>
-                                {this.state.error.password && <div className="my-2 font-weight-bold" style={{color: 'red'}}>{this.state.error.password}</div>}
+                                {this.state.error.password && <div className="my-2" style={{color: 'red'}}>{this.state.error.password}</div>}
                                 
-                                <Button type="submit" className="my-3" inverted color='yellow'>Register</Button>
+                                <Button type="submit" className="my-3 font-weight-light" style={{fontFamily: 'Goldman'}} inverted color='yellow'>Register</Button>
                             </form>
                         </div>
                     </div>

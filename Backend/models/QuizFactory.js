@@ -31,6 +31,9 @@ const quizFactorySchema = new mongoose.Schema({
     },
     quizStartedTime: {
         type: Number
+    },
+    regCost : {
+        type: Number
     }
 }, {timestamps: true});
 

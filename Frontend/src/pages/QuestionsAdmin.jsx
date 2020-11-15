@@ -14,6 +14,7 @@ class QuestionsAdmin extends Component {
         questions: [],
         quizFactory: '',
         stage: '',
+        totalRegUsers: 0,
         quizContractAddress: '',
         loading: false,
         disabled: false
@@ -27,8 +28,9 @@ class QuestionsAdmin extends Component {
         const accounts = await web3.eth.getAccounts();
         const instance = await instanceQuiz(quizContractAddress);
         const stage = await instance.methods.getStage().call();
+        const totalRegUsers = await instance.methods.totalRegUsers().call();
         
-        this.setState({quiz: quiz.data, questions: quiz.data.questions, quizFactory: quizFactory.data, stage, quizContractAddress });
+        this.setState({quiz: quiz.data, questions: quiz.data.questions, quizFactory: quizFactory.data, stage, totalRegUsers, quizContractAddress });
     }
 
     deleteQuestion = async (questionId) => {
@@ -158,7 +160,7 @@ class QuestionsAdmin extends Component {
             <div className="container">
                 <ToastContainer />
                 {/* { this.showNotif() || toast.success('Done') } */}
-                <div className="alert alert-warning mx-auto mt-3" style={{width: '60%', fontWeight: 'bolder', fontSize: '15px'}}>
+                <div className="alert alert-warning mx-auto mt-3" style={{width: '60%', fontWeight: 'bolder', fontSize: '15px', fontFamily: 'Goldman'}}>
                     <div className='row'>
                         <div className="col-lg-6">
                             <span className='text-danger'>Quiz Title : </span>
@@ -193,6 +195,16 @@ class QuestionsAdmin extends Component {
                         <div className="col-lg-6">
                             <span className='text-danger'>Quiz Duration : </span>
                             <span className='text-dark'>{this.state.quizFactory.duration} min</span>
+                        </div>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Total Registered Users : </span>
+                            <span className='text-dark'>{this.state.totalRegUsers}</span>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Registration Cost : </span>
+                            <span className='text-dark'>{this.state.quizFactory.regCost} QC</span>
                         </div>
                     </div>
                 </div>

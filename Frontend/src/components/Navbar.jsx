@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
 import {Link, NavLink} from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import jwtDecode from 'jwt-decode';
 import VerifyAuthentication from '../utilities/verifyAuthentication';
 import Logo from '../images/logo';
 
 class Navbar extends Component {
     state = { 
         admin: '',
-        user: ''
+        user: '',
+        username: ''
      }
 
     componentDidMount() {
         const admin = VerifyAuthentication.isAdminAuthenticated();
         const user = VerifyAuthentication.isUserAuthenticated();
         this.setState({ admin, user });
+        try {
+            const { email } = jwtDecode(localStorage.getItem('token'));
+            let username;
+            if(admin)
+                username = 'Admin';
+            else if(user)
+                username = email;
+            this.setState({ username });
+        } catch (error) {
+        }
     }
 
     render() { 
@@ -39,18 +51,23 @@ class Navbar extends Component {
                         { admin && 
                         <React.Fragment>
                             <NavLink className="nav-link" to="/quizPageAdmin">QuizPageAdmin</NavLink>
-                            <NavLink className="nav-link" style={{position: 'absolute' , right: '2vw'}} to="/logout">
-                                <Button inverted color="red" style={{ fontFamily: 'Goldman'}}>Logout</Button>
-                                {/* <button className="btn btn-outline-danger" style={{position: 'absolute' , right: '2px'}}>Logout</button> */}
-                            </NavLink>
+                            <span style={{position: 'absolute' , right: '2vw'}}>
+                                <span className='mr-3'>Welcome { this.state.username }</span>
+                                <Link to="/logout">
+                                    <Button inverted color="red" style={{fontFamily: 'Goldman'}}>Logout</Button>
+                                </Link>
+                            </span>
                         </React.Fragment> }
                         { user && 
                         <React.Fragment>
                             <NavLink className="nav-link" to="/quizPageUser">Quizzes</NavLink>
                             <NavLink className="nav-link" to="/userCoins">QuizCoins</NavLink>
-                            <NavLink className="nav-link" style={{position: 'absolute' , right: '2vw'}} to="/logout">
-                                <Button inverted color="red" style={{fontFamily: 'Goldman'}}>Logout</Button>
-                            </NavLink>
+                            <span style={{position: 'absolute' , right: '2vw'}}>
+                                <span className='mr-3'>Welcome { this.state.username }</span>
+                                <Link to="/logout">
+                                    <Button inverted color="red" style={{fontFamily: 'Goldman'}}>Logout</Button>
+                                </Link>
+                            </span>
                         </React.Fragment> }
                     </div>
                     </div>

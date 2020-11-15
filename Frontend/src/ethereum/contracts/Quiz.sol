@@ -38,6 +38,9 @@ contract QuizFactory {
         require(instanceEIP20.balanceOf(msg.sender) >= coins);
         (msg.sender).transfer(coins*0.01 ether);
     }
+    
+    receive() external payable {
+    }
 }
 
 contract Quiz{
@@ -52,6 +55,8 @@ contract Quiz{
     }
     
     mapping (string => User) public users;              // Stores all the registered users
+    
+    uint public totalRegUsers;                     // Stores the count of registered users
     
     enum Stage {Init, Reg, Play, Pub, End}
     Stage public stage;
@@ -123,6 +128,7 @@ contract Quiz{
         users[email].isRegistered = true;
         users[email].quizCompleted = false;
         users[email].prizeClaimed = false;
+        ++totalRegUsers;
     }
     
     function isUserRegistered(string memory email) public view returns (bool) {
