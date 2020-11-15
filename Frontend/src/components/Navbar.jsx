@@ -30,8 +30,6 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <NavLink className="nav-link" aria-current="page" to="/home">Home</NavLink>
-                        <NavLink className="nav-link" to="/features">Features</NavLink>
-                        <NavLink className="nav-link" to="/pricing">Pricing</NavLink>
                         { !admin && !user &&
                         <React.Fragment>
                             <NavLink className="nav-link" to="/adminLogin">Admin Login</NavLink> 
@@ -48,7 +46,6 @@ class Navbar extends Component {
                         </React.Fragment> }
                         { user && 
                         <React.Fragment>
-                            <NavLink className="nav-link" to="/userPage1">UserPage1</NavLink>
                             <NavLink className="nav-link" to="/quizPageUser">Quizzes</NavLink>
                             <NavLink className="nav-link" to="/userCoins">QuizCoins</NavLink>
                             <NavLink className="nav-link" style={{position: 'absolute' , right: '2vw'}} to="/logout">

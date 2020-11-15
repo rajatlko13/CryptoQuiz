@@ -5,7 +5,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import Logo from '../images/logo';
 import UserLoginSvg from '../images/userLoginSvg';
 
 axios.interceptors.response.use(null, error => {

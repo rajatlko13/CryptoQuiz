@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import EditQuestion from './EditQuestion';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Table, Button, Modal, Header, Icon } from 'semantic-ui-react';
+import { Table, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
@@ -13,6 +12,7 @@ class QuestionsAdmin extends Component {
     state = { 
         quiz: [],
         questions: [],
+        quizFactory: '',
         stage: '',
         quizContractAddress: '',
         loading: false,
@@ -28,7 +28,7 @@ class QuestionsAdmin extends Component {
         const instance = await instanceQuiz(quizContractAddress);
         const stage = await instance.methods.getStage().call();
         
-        this.setState({quiz: quiz.data, questions: quiz.data.questions, stage, quizContractAddress });
+        this.setState({quiz: quiz.data, questions: quiz.data.questions, quizFactory: quizFactory.data, stage, quizContractAddress });
     }
 
     deleteQuestion = async (questionId) => {
@@ -158,6 +158,44 @@ class QuestionsAdmin extends Component {
             <div className="container">
                 <ToastContainer />
                 {/* { this.showNotif() || toast.success('Done') } */}
+                <div className="alert alert-warning mx-auto mt-3" style={{width: '60%', fontWeight: 'bolder', fontSize: '15px'}}>
+                    <div className='row'>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Quiz Title : </span>
+                            <span className='text-dark'>{this.state.quizFactory.name}</span>
+                        </div>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Description : </span>
+                            <span className='text-dark'>{this.state.quizFactory.description}</span>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Registration Start Date : </span>
+                            <span className='text-dark'>{this.state.quizFactory.regStartDate}</span>
+                        </div>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Registration Start Time : </span>
+                            <span className='text-dark'>{this.state.quizFactory.regStartTime}</span>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Quiz Start Date : </span>
+                            <span className='text-dark'>{this.state.quizFactory.playStartDate}</span>
+                        </div>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Quiz Start Time : </span>
+                            <span className='text-dark'>{this.state.quizFactory.playStartTime}</span>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-lg-6">
+                            <span className='text-danger'>Quiz Duration : </span>
+                            <span className='text-dark'>{this.state.quizFactory.duration} min</span>
+                        </div>
+                    </div>
+                </div>
                 
                 { this.state.stage == 0  && <Button color='green' className='mt-3 mx-2' onClick={this.startReg} loading={this.state.loading} disabled={this.state.disabled} >Start Registration</Button> }
                 { this.state.stage == 1  && <Button color='green' className='mt-3 mx-2' onClick={this.startQuiz} loading={this.state.loading} disabled={this.state.disabled} >Start Quiz</Button> }

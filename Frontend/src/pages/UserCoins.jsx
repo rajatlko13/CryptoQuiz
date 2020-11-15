@@ -3,7 +3,7 @@ import web3 from '../ethereum/web3';
 import instanceEIP20 from '../ethereum/instanceEIP20';
 import instanceQuizFactory from '../ethereum/instanceQuizFactory';
 import { addressQuizFactory } from '../ethereum/addressConfig.json';
-import { Button, Input } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import UserCoinsSvg from '../images/userCoins';
@@ -77,7 +77,7 @@ class UserCoins extends Component {
                         <h4 className="m-3">Balance : {this.state.balance} QC</h4>
                         <form>
                             <div className="input-group mx-auto" style={{width: '93%'}}>
-                                <input type="number" min="0" className="form-control font-weight-bold" style={{textAlign: 'center'}} value={this.state.coins} onChange={this.onChange} disabled={this.state.disabled} />
+                                <input type="number" min="1" className="form-control font-weight-bold" style={{textAlign: 'center'}} value={this.state.coins} onChange={this.onChange} disabled={this.state.disabled} />
                                 <div className="input-group-append">
                                     <span className="input-group-text">QC</span>
                                 </div>

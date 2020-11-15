@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import EditQuestion from './EditQuestion';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Table, Button, Modal, Header, Icon, Label } from 'semantic-ui-react';
+import { Button, Label } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
@@ -106,30 +105,46 @@ class QuestionsUser extends Component {
         return ( 
             <div className="container my-4" style={{fontFamily: 'Goldman'}}>
                 <ToastContainer />
-                <div className="mb-2" style={{fontSize: '20px'}}>
-                    <label style={{fontWeight: 'bold', color: 'red'}}>Quiz Title : </label>
+                <Label className="mb-4" style={{fontSize: '20px', fontWeight: 'normal'}}>
+                    <label style={{color: 'red'}}>Quiz Title : </label>
                     <span> {this.state.quiz.name}</span>
                     <br/><br/>
-                    <label style={{fontWeight: 'bold', color: 'red'}}>Description :</label> 
+                    <label style={{color: 'red'}}>Description :</label> 
                     <span> {this.state.quiz.description}</span>
-                </div>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Registration Start Date : </label>
+                    <span> {this.state.quiz.regStartDate}</span>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Registration Start Time : </label>
+                    <span> {this.state.quiz.regStartTime}</span>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Quiz Start Date : </label>
+                    <span> {this.state.quiz.playStartDate}</span>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Quiz Start Time : </label>
+                    <span> {this.state.quiz.playStartTime}</span>
+                    <br/><br/>
+                    <label style={{color: 'red'}}>Duration : </label>
+                    <span> {this.state.quiz.duration} min</span>
+                </Label>
+                <br/>
                 { this.state.stage == 0 && <h3 style={{color: 'cyan', fontFamily: 'Goldman'}}>Registrations will begin shortly...</h3>}
-                { this.state.stage == 1 && !isRegistered  && <Button color='blue' className='mt-3 mx-2' onClick={this.regQuiz} loading={this.state.loading} disabled={this.state.disabled} >Register</Button> }
+                { this.state.stage == 1 && !isRegistered  && <Button color='blue' className='mx-2' onClick={this.regQuiz} loading={this.state.loading} disabled={this.state.disabled} >Register</Button> }
                 { this.state.stage == 1 && isRegistered  && <Label color="green" size="large" circular>Registered</Label> }
                 { this.state.stage > 1 && !isRegistered && <h3 style={{color: 'cyan', fontFamily: 'Goldman'}}>Registrations Closed! You have not registered for this Quiz.</h3>}
                 { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={{ pathname: "/user/attemptQuiz/" + this.props.match.params.id, 
                                                                                         state: {
                                                                                             quizContractAddress: this.state.quizContractAddress
                                                                                         }   }} >
-                                                                                <Button color='green' className='mt-3 mx-2'>Start Quiz</Button>
+                                                                                <Button color='green' className='mx-2'>Start Quiz</Button>
                                                                             </Link> }
-                { this.state.stage == 2 && hasAttempted && <Label color="red" size="large" className='font-weight-light mt-3' circular>Quiz Attempted</Label> }
-                { this.state.stage == 3 && isRegistered && <Label color="olive" size="large" className='font-weight-light mt-3' circular>Answers Key will be released shortly...</Label>}
+                { this.state.stage == 2 && hasAttempted && <Label color="red" size="large" className='font-weight-light' circular>Quiz Attempted</Label> }
+                { this.state.stage == 3 && isRegistered && <Label color="olive" size="large" className='font-weight-light' circular>Answers Key will be released shortly...</Label>}
                 { this.state.stage == 4 && isRegistered  && <Link to={{ pathname: `/user/viewAnswers/${this.props.match.params.id}` , 
                                                                         state: {
                                                                             quizContractAddress: this.state.quizContractAddress
                                                                         } }}>
-                                                                <Button color='blue' className='mt-3 mx-2'>View Answers</Button>
+                                                                <Button color='blue' className='mx-2'>View Answers</Button>
                                                             </Link> }
             </div>
          );

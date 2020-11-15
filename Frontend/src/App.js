@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Features from './Features';
-import Pricing from './Pricing';
-import Home from './Home';
+import Home from './pages/Home';
 import Registration from './pages/Registration';
 import AdminLogin from './pages/AdminLogin';
 import Login from './pages/Login';
@@ -23,7 +22,6 @@ import Navbar from './components/Navbar';
 import ProtectedRoute from './utilities/ProtectedRoute';
 import VerifyAuthentication from './utilities/verifyAuthentication';
 import NotFoundPage from './pages/NotFoundPage';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -43,7 +41,6 @@ class App extends Component {
         <Switch>
             <Route path="/home" component={Home} />
             <Route path="/features" component={Features} />
-            <Route path="/pricing" component={Pricing} />
             <Route path="/adminLogin" component={AdminLogin} />
             <ProtectedRoute path="/quizPageAdmin" component={QuizPageAdmin} role="admin" {...this.props} />
             <ProtectedRoute path="/admin/quiz/:id" component={QuestionsAdmin} role="admin" {...this.props} />

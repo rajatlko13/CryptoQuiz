@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Label } from 'semantic-ui-react';
+import { Label } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import web3 from '../ethereum/web3';

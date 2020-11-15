@@ -116,46 +116,55 @@ class NewQuizPage extends Component {
             <React.Fragment>
                 {/* <h1>Hello {this.props.match.params.id}</h1> */}
                 <ToastContainer />
-                <div className="my-5 mx-auto" style={{width: '25vw', fontFamily: 'Goldman', border: '3px solid rgb(243,9,212)', boxShadow: '5px 5px 15px rgb(243,9,212)', background: 'linear-gradient(to right bottom, rgba(104,177,249,0.9), rgba(243,9,212,0.9))' }}>
+                <div className="my-5 mx-auto" style={{width: '40vw', fontFamily: 'Goldman', border: '3px solid rgb(243,9,212)', boxShadow: '5px 5px 15px rgb(243,9,212)', background: 'linear-gradient(to right bottom, rgba(104,177,249,0.9), rgba(243,9,212,0.9))' }}>
                     <h3 className="text-center my-3" style={{fontFamily: 'Goldman'}}>Create New Quiz</h3>
                     <hr className="w-25 mx-auto text-dark font-weight-bolder" />
                     <div className="text-center my-4">
                         <NewQuizSvg width='130px' />
                     </div>
-                    <form onSubmit={this.handleSubmit} className="px-3">   
+                    <form onSubmit={this.handleSubmit} className="px-3"> 
                         <div className="form-group my-2">
                             <label>Quiz Name</label>
                             <input name="name" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputName1" value={this.state.quiz.name} onChange={this.onChange} />
+                            {this.state.error.name && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.name}</div>}
                         </div>
-                        {this.state.error.name && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.name}</div>}
                         <div className="form-group my-2">
                             <label>Description</label>
-                            <input name="description" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
+                            <textarea name="description" type="text" className="form-control" style={{fontFamily: 'Goldman'}} id="exampleInputDescription1" value={this.state.quiz.description} onChange={this.onChange}/>
+                            {this.state.error.description && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.description}</div>}
                         </div>
-                        {this.state.error.description && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.description}</div>}
-                        <div className="form-group my-2">
-                            <label>Registration Start Date</label>
-                            <input name="regStartDate" type="Date" className="form-control" style={{fontFamily: 'Goldman'}} id="regStartDate" value={this.state.quiz.regStartDate} onChange={this.onChange}/>
+                        <div className='row'>
+                            <div className="form-group my-2 col-lg-6">
+                                <label>Registration Start Date</label>
+                                <input name="regStartDate" type="Date" className="form-control" style={{fontFamily: 'Goldman'}} id="regStartDate" value={this.state.quiz.regStartDate} onChange={this.onChange}/>
+                                {this.state.error.regStartDate && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regStartDate}</div>}
+                            </div>
+                            <div className="form-group my-2 col-lg-6">
+                                <label>Registration Start Time</label>
+                                <input name="regStartTime" type="time" className="form-control" style={{fontFamily: 'Goldman'}} id="regStartTime" value={this.state.quiz.regStartTime} onChange={this.onChange}/>
+                                {this.state.error.regStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regStartTime}</div>}
+                            </div>
                         </div>
-                        {this.state.error.regStartDate && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regStartDate}</div>}
-                        <div className="form-group my-2">
-                            <label>Registration Start Time</label>
-                            <input name="regStartTime" type="time" className="form-control" style={{fontFamily: 'Goldman'}} id="regStartTime" value={this.state.quiz.regStartTime} onChange={this.onChange}/>
+                        <div className='row'>
+                            <div className="form-group my-2 col-lg-6">
+                                <label>Quiz Start Date</label>
+                                <input name="playStartDate" type="Date" className="form-control" style={{fontFamily: 'Goldman'}} id="playStartDate" value={this.state.quiz.playStartDate} onChange={this.onChange}/>
+                                {this.state.error.playStartDate && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartDate}</div>}
+                            </div>
+                            <div className="form-group my-2 col-lg-6">
+                                <label>Quiz Start Time</label>
+                                <input name="playStartTime" type="time" className="form-control" style={{fontFamily: 'Goldman'}} id="playStartTime" value={this.state.quiz.playStartTime} onChange={this.onChange}/>
+                                {this.state.error.playStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartTime}</div>}
+                            </div>
                         </div>
-                        {this.state.error.regStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.regStartTime}</div>}
-                        <div className="form-group my-2">
-                            <label>Quiz Start Date</label>
-                            <input name="playStartDate" type="Date" className="form-control" style={{fontFamily: 'Goldman'}} id="playStartDate" value={this.state.quiz.playStartDate} onChange={this.onChange}/>
-                        </div>
-                        {this.state.error.playStartDate && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartDate}</div>}
-                        <div className="form-group my-2">
-                            <label>Quiz Start Time</label>
-                            <input name="playStartTime" type="time" className="form-control" style={{fontFamily: 'Goldman'}} id="playStartTime" value={this.state.quiz.playStartTime} onChange={this.onChange}/>
-                        </div>
-                        {this.state.error.playStartTime && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.playStartTime}</div>}
                         <div className="form-group my-2">
                             <label>Duration</label>
-                            <input name="duration" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="duration" value={this.state.quiz.duration} onChange={this.onChange}/>
+                            <div className="input-group">
+                                <input name="duration" type="number" className="form-control" style={{fontFamily: 'Goldman'}} id="duration" value={this.state.quiz.duration} onChange={this.onChange}/>
+                                <div className="input-group-append">
+                                    <span className="input-group-text">min</span>
+                                </div>
+                            </div>
                         </div>
                         {this.state.error.duration && <div className="my-2" style={{color: 'cyan'}}>{this.state.error.duration}</div>}
                         

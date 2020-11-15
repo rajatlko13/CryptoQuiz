@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'; 
-import VerifyAuthentication from './utilities/verifyAuthentication';
+import VerifyAuthentication from '../utilities/verifyAuthentication';
 
 class Home extends Component {
 
