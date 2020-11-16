@@ -5,18 +5,21 @@ import 'semantic-ui-css/semantic.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import web3 from '../ethereum/web3';
 import instanceQuiz from '../ethereum/instanceQuiz';
+import instanceEIP20 from '../ethereum/instanceEIP20';
 
 class PublishAnswersPage extends Component {
     state = { 
         questions: [],
         answers: '',
+        regCost: 0,
         loading: false,
         disabled: false
      }
 
     async componentDidMount() {
         const quiz = await axios.get('http://localhost:9000/api/quiz/' + this.props.match.params.id);
-        this.setState({ questions: quiz.data.questions });
+        const quizFactory = await axios.get('http://localhost:9000/api/quizFactory/' + quiz.data.quizId);
+        this.setState({ questions: quiz.data.questions, regCost: quizFactory.data.regCost});
     }
 
     handleChange = (e) => {
@@ -66,7 +69,12 @@ class PublishAnswersPage extends Component {
             console.log(ansKey);
             const accounts = await web3.eth.getAccounts();
             const instance = await instanceQuiz(this.props.history.location.state.quizContractAddress);
+            const totalRegUsers = await instance.methods.totalRegUsers().call();
             await instance.methods.publishAnswers(ansKey).send({ from: accounts[0] });
+            
+            const coins = Math.floor(this.state.regCost * 3/2) * totalRegUsers;
+            await instanceEIP20.methods.transfer(this.props.history.location.state.quizContractAddress, coins)
+                                .send({ from: accounts[0]});
 
             this.setState({ loading: false, disabled: false });
             this.props.history.replace('/admin/quiz/' + this.props.match.params.id);

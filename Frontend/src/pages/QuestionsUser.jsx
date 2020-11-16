@@ -137,7 +137,7 @@ class QuestionsUser extends Component {
                 <br/>
                 { this.state.stage == 0 && <h3 style={{color: 'cyan', fontFamily: 'Goldman'}}>Registrations will begin shortly...</h3>}
                 { this.state.stage == 1 && !isRegistered  && <Button color='blue' className='mx-2' onClick={this.regQuiz} loading={this.state.loading} disabled={this.state.disabled} >Register</Button> }
-                { this.state.stage == 1 && isRegistered  && <Label color="green" size="large" circular>Registered</Label> }
+                { this.state.stage == 1 && isRegistered  && <Label color="green" size="large" className='font-weight-light' circular>Registered</Label> }
                 { this.state.stage > 1 && !isRegistered && <h3 style={{color: 'cyan', fontFamily: 'Goldman'}}>Registrations Closed! You have not registered for this Quiz.</h3>}
                 { this.state.stage == 2 && isRegistered && !hasAttempted && <Link to={{ pathname: "/user/attemptQuiz/" + this.props.match.params.id, 
                                                                                         state: {

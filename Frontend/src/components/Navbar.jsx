@@ -50,7 +50,7 @@ class Navbar extends Component {
                         </React.Fragment> }
                         { admin && 
                         <React.Fragment>
-                            <NavLink className="nav-link" to="/quizPageAdmin">QuizPageAdmin</NavLink>
+                            <NavLink className="nav-link" to="/quizPageAdmin">Quizzes</NavLink>
                             <span style={{position: 'absolute' , right: '2vw'}}>
                                 <span className='mr-3'>Welcome { this.state.username }</span>
                                 <Link to="/logout">
