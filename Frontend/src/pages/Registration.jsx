@@ -97,7 +97,7 @@ class Registration extends Component {
         return ( 
             <React.Fragment>
                 <ToastContainer />
-                <div className="container" style={{marginTop: '10vh', marginBottom: '10vh'}}>
+                <div className="container" style={{marginTop: '10vh', marginBottom: '10vh', paddingBottom: '10vh'}}>
                     <div className="row mx-auto" style={{ width: '700px', boxShadow: '7px 7px 15px yellow'}}>
                         <div className="col-lg-4 bg-secondary p-2" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             <div className="mx-auto">
