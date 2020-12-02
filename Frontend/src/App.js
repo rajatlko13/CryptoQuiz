@@ -11,7 +11,6 @@ import EditQuestion from './pages/EditQuestion';
 import NewQuizPage from './pages/NewQuizPage';
 import NewQuestionPage from './pages/NewQuestionPage';
 import PublishAnswersPage from './pages/PublishAnswersPage';
-import UserPage1 from './pages/UserPage1';
 import UserCoins from './pages/UserCoins';
 import QuizPageUser from './pages/QuizPageUser';
 import QuestionsUser from './pages/QuestionsUser';
@@ -50,7 +49,6 @@ class App extends Component {
             <ProtectedRoute path="/admin/publishAnswers/:id" component={PublishAnswersPage} role="admin" {...this.props} />
             {/* <ProtectedRoute path="/userPage1" render={(props) => <UserPage1 role="user" {...props} /> } />
             <ProtectedRoute path="/quizPageAdmin" render={(props) => <QuizPageAdmin role="admin" {...props} /> } /> */}
-            <ProtectedRoute path="/userPage1" component={UserPage1} role="user" {...this.props} />
             <ProtectedRoute path="/userCoins" component={UserCoins} role="user" {...this.props} />
             <ProtectedRoute path="/quizPageUser" component={QuizPageUser} role="user" {...this.props} />
             <ProtectedRoute path="/user/quiz/:id" component={QuestionsUser} role="user" {...this.props} />
